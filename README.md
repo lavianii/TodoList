@@ -2,9 +2,10 @@
 
 ## Imagens do Projeto funcionando
 ### Console
-![Alt text](image.png)
+<img src="https://prnt.sc/ZGU92Vj_yBrO" />
+
 ### API Swagger
-![Alt text](image-1.png)
+<img src="" />
 
 ## 📖 About
 
@@ -21,7 +22,8 @@ O TodoList é um CRUD(Create, Read, Update, Delete), foi uma atividade de um Tre
 1. Clonar o Repositório
 2. Entrar na pasta do projeto `cd TodoList`
 3. Instalar o Entity Framework Core `dotnet tool install --global dotnet-ef`
-> Se esta for a primeira vez que você executa o projeto, execute migration Atualizar banco de dados
+> Se esta for a primeira vez que você executa o projeto, execute migration para ATUALIZAR o banco de dados
+>>Faça isso na TodoList
 ```bash
 dotnet ef migrations add MigraçãoInicial --startup-project .\TodoList.Api\TodoList.Api.csproj --project .\TodoList.Core\TodoList.Core.csproj 
 
