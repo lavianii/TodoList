@@ -101,6 +101,43 @@ async Task MarcarTarefaParaConcluida()
 
 }
 
+async Task AlterarDescricaoTarefa()
+{
+    if (!await dbContext!.Todos!.AnyAsync())
+    {
+        Console.WriteLine("Não há tarefas para atualizar. A lista de tarefas está vazia.");
+        return;
+    }
+
+    Console.WriteLine("Tarefas na Lista de Tarefas:");
+    await DisplayTasks();
+
+    Console.Write("Digite o ID da tarefa para alterar sua descrição: ");
+
+    if (int.TryParse(Console.ReadLine(), out int id) && id >= 0)
+    {
+        var tarefa = await dbContext!.Todos!.FindAsync(id);
+        if (tarefa is null)
+        {
+            Console.WriteLine("ID inválido, tarefa não encontrada. Por favor, insira um ID válido.");
+            return;
+        }
+
+        Console.Write("Digite a nova descrição da tarefa: ");
+        string descricao = Console.ReadLine() ?? string.Empty;
+
+        if (string.IsNullOrWhiteSpace(descricao))
+        {
+            Console.WriteLine("Descrição inválida. Por favor, insira uma descrição válida.");
+            return;
+        }
+
+        tarefa.Descricao = descricao;
+        await dbContext!.SaveChangesAsync();
+        Console.WriteLine("Descrição da tarefa atualizada com sucesso!");
+    }
+}
+
 async Task VisualizarTarefas()
 {
     if (!await dbContext!.Todos!.AnyAsync())
@@ -135,10 +172,11 @@ static void MenuMenu()
     Console.WriteLine("2. Remover Tarefa");
     Console.WriteLine("3. Marcar Tarefa como Concluída");
     Console.WriteLine("4. Visualizar Tarefas");
-    Console.WriteLine("5. Sair");
+    Console.WriteLine("5. Alterar Descrição da Tarefa");
+    Console.WriteLine("6. Sair");
     Console.WriteLine("=====================================\n");
 
-    Console.Write("\nDigite sua escolha (1-5): ");
+    Console.Write("\nDigite sua escolha (1-6): ");
 }
 
 static string VerSO()
@@ -178,10 +216,13 @@ while (true)
             await VisualizarTarefas();
             break;
         case 5:
+            await AlterarDescricaoTarefa();
+            break;
+        case 6:
             Sair();
             break;
         default:
-            Console.WriteLine("Só pode ser digitado números de 1 a 5.");
+            Console.WriteLine("Só pode ser digitado números de 1 a 6.");
             break;
     }
 }
