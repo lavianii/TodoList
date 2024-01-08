@@ -30,6 +30,7 @@ app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 app.MapGet("/todos", Controllers.GetAllTodosAsync);
 app.MapGet("todos/{id}", Controllers.GetTodosAsync);
 app.MapPost("/todos", Controllers.PostTodoAsync);
+app.MapPut("/todos/{id}", Controllers.UpdateTodoAsync);
 app.MapDelete("/todos/{id}", Controllers.DeleteTodoAsync);
 
 

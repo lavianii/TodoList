@@ -7,7 +7,7 @@ namespace TodoList.Api.Controllers
 
     public static class Controllers
     {
-        
+
         public static async Task<IResult> GetAllTodosAsync(TodoListDbContext data)
         {
             var todos = await data.Todos!.ToListAsync();
@@ -18,7 +18,7 @@ namespace TodoList.Api.Controllers
         {
             var todos = await data.Todos!.FindAsync(id);
 
-            if(todos is null) return Results.NotFound();
+            if (todos is null) return Results.NotFound();
 
             return Results.Ok(todos);
         }
@@ -31,10 +31,24 @@ namespace TodoList.Api.Controllers
             return Results.Created($"/todos/{todoItem.Id}", todoItem);
         }
 
+        public static async Task<IResult> UpdateTodoAsync(TodoListDbContext data, TodoItem updatedTodo, int id)
+        {
+
+            var todo = await data.Todos!.FindAsync(id);
+            if (todo is null)
+                return Results.NotFound();
+
+            todo.Descricao = updatedTodo.Descricao;
+
+            await data.SaveChangesAsync();
+            return Results.Ok();
+
+        }
+
         public static async Task<IResult> DeleteTodoAsync(TodoListDbContext data, int id)
         {
             var todo = await data.Todos!.FindAsync(id);
-            if(todo is null) return Results.NotFound();
+            if (todo is null) return Results.NotFound();
 
             data.Todos.Remove(todo);
             await data.SaveChangesAsync();
