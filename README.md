@@ -38,6 +38,6 @@ dotnet run
 ```
 5. Executar o console
 ```bash
-cd TodoList.Console.Console
+cd TodoList.Console
 dotnet run
 ```
